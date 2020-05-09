@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<maps position="0.0" >
+  <latitude
+        minvalue="-90"
+        maxvalue="90"
+        spacing="15"
+        color="0x66CCCC"
+        visible="false"
+        linewidth="1"
+        linestyle="1"
+        />
+
+  <longitude
+         minvalue="-180"
+         maxvalue="180"
+         spacing="15"
+         color="0x66CCCC"
+         visible="false"
+         linewidth="1"
+         linestyle="1"
+         />
+
+  <latitudelabel
+        minvalue="-90"
+        maxvalue="90"
+        spacing="15"
+        color="white"
+        sphere="true"
+        visible="false"
+        />
+
+  <longitudelabel
+         minvalue="-180"
+         maxvalue="180"
+         spacing="15"
+         color="white"
+         sphere="true"
+         visible="false"
+         />
+
+  <map
+        source="/auxdata/maps/OUTVHPOL"
+        description="World Country Outlines"
+        visible="false"
+        color="cyan"
+        linewidth="1.0"
+        linestyle="0"
+  />
+
+  <map
+       source="/auxdata/maps/OUTVHRES"
+       description="World Coastlines"
+       visible="true"
+       color="0x0000FF"
+       linewidth="1.0"
+       linestyle="0"
+       />
+
+
+  <map
+       source="/auxdata/maps/OUTLHPOL"
+       description="World Political Boundaries"
+       visible="true"
+       color="0xFF0000"
+       linewidth="1.0"
+       linestyle="3"
+       />
+
+<!--
+  <map
+       source="/auxdata/maps/Countries.zip"
+       description="World Country Outlines"
+       visible="false"
+       color="0x00CC00"
+       linewidth="1.0"
+       linestyle="0"
+       />
+       -->
+
+  <map
+       source="/auxdata/maps/OUTLUSAM"
+       description="North &amp; Central America"
+       visible="false"
+       color="0x0000FF"
+       linewidth="1.0"
+       linestyle="0"
+       />
+
+</maps>

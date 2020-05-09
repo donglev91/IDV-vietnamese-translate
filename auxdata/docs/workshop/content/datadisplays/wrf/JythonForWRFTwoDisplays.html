@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Combining Displays</title>
+</head>
+<body>
+
+<div class="overview">
+Adding different displays to your WRF images.
+</div>
+
+<p>Now that we have basic control over our display, let's add a <i>color-shaded plan view</i> to our contoured display. The following example code is based on the example from the previous section, but has been re-arranged for clarity. Note that we have given each <code>DisplayControl</code> object (<code>dc_contour</code> and <code>dc_shade</code>) a "ZPosition" to ensure that the contours are on top of the color shaded display.</p>
+
+[gen::includeSrc "datadisplays/wrf/jython/two_displays.py"]
+<br>
+[ht::cimg images/WRF_twoDisplays.png]
+
+</body>
+</html>

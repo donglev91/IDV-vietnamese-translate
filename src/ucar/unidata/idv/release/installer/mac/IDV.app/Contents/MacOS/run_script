@@ -1,0 +1,4 @@
+#!/bin/sh
+cd ${installer:sys.installationDir}
+${installer:sys.installationDir}/runIDV &
+exit 0

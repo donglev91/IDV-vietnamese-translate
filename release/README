@@ -1,0 +1,392 @@
+********************************************************************************
+The release environment:
+
+Start releases in the morning. If there are problems, you have time to recover.
+
+On conan all release oriented directories and files point through the
+symbolic link:
+
+/content/software/idv/current
+
+So we have(in an abbreviated way):
+/content/software/idv/data  --> current/data
+/content/software/idv/docs  --> current/docs
+/content/software/idv/webstart/IDV  --> current/webstart/IDV
+
+Run the test suite (see below) and make sure to update and
+check in /ucar/unidata/idv/resources/version.properties.
+
+Before making a release, make sure to update the release notes
+in auxdata/docs/userguide/content/ReleaseNotes.html
+******************************************************
+- Try to add descriptive verbage to each item in the Release Notes.
+- The questions (q attribute) should be camel cased (i.e. first letter of each word should be capitalized).
+  Words like for, and, a, the don't need to be capitalized.
+- If there are other pages in the user guide with more information on the
+  change (like a new control page, or something in the preferences), add a link to it from the description.
+- The format for menus and sub-menus is Menu->Submenu->Sub-submenu.
+  You can use the [ug::menu] macro which will format and bold the menus for you.
+  If there are multiple words in a menu, enclose them in braces {}.
+  Examples:  [ug::menu Edit Preferences] will show up as Edit->Preferences.
+  [ug:menu Edit {Remove All Displays}] will show up as Edit->Remove All Displays
+- Release Notes should include items since the last previous major release.
+  Updates (e.g. 3.0u1) should include all the notes from the first release of that series (e.g. 3.0)
+  up to the current one.
+- It's good to update the Release Notes when you add something new so you don't forget about it
+  when the official release comes around.
+********************************************************
+
+When you are ready to make a release, run:
+
+cd /share/idv/release
+svn update build.xml
+./buildIdv release
+
+Note that this script has a dependency on install4j license server.
+The user running this script must point to the right license server.
+As of October 2011, the license server is running on abbott (not zero).
+License server configuration information can be found in ~/.install4j4/config.xml.
+Therein you will find the license server host. More information on the
+install4j license server (including where to download the server) can
+be found here:
+
+https://www.unidata.ucar.edu/unidata_only/admin/idv_software_license_info.html
+
+To start the server on abbott the startup script is/etc/rc5.d/S98ejtserver
+and the install at /opt/ejtserver.
+
+The above buildIdv command  will run the build, generate the installers, move all
+relevant files (installers, docs, webstart) to conan.  The following directories
+will be created:
+
+/content/software/idv/<release_dir>
+/content/downloads/idv/<release_dir>
+
+where <release_dir> is the version number with underscores (e.g. version 2.8 will be
+in <release_dir> 2_8).
+
+Then (see below):
+
+  Update the downloads/idv/toc.xml (see below)
+
+  Expand the javadoc (see below).
+
+  Generate the User Guide and Workshop PDFs (see below)
+
+  Update the index.html page (see below).
+
+  branch the git repository
+
+  change the /content/software/idv/current to point to the new release.
+
+********************************************************************************
+
+Update the downloads toc.xml page
+
+On conan:
+
+cd /content/downloads/idv
+edit the toc.xml
+  - change the %version% property value
+  - change where the current and previous point to
+
+change the current link to point to the new release.
+cd /content/downloads/idv
+   rm current
+   ln -s <current IDV version> current
+
+********************************************************************************
+
+Expand the javadoc
+
+cd /content/software/idv/<release>/docs
+jar xvf ~ftp/pub/idv/<release_dir>/idv_javadoc_<version>.jar
+cd docs
+mv javadoc ..
+cd ..
+rm -rf META-INF/ docs
+
+********************************************************************************
+
+Generate the PDFs
+
+You  need to build the userguide.pdf and workshop.pdf files.
+To do this you need to be on harpo (which has the htmldoc executable)
+and run:
+ant docs_pdf
+from /share/idv/runtime
+This will generate the userguide.pdf and workshop.pdf and place them in the
+docs directory.
+
+Note that ant may not be on your path. Look for it in
+
+/share/apache-ant/
+
+Look at the ant output and you will see where these PDFs are located.
+
+Once this is done, copy them to conan:
+
+/content/software/idv/<release>/docs/userguide/userguide.pdf
+/content/software/idv/<release>/docs/workshop/workshop.pdf
+
+********************************************************************************
+
+Changing the index.html page
+
+cd /content/software/idv/<release_dir>
+
+cp ../<previous_release_dir>/index.html index.html.<release_dir>
+
+edit the index.html.<version> file and update the IDV News and Announcements
+section with information about the new release. Also edit the "Posted" date.
+
+cp index.html.<version> index.html
+
+(If you have to redo the release, index.html will get overwritten.  That's why
+we make the edits in index.html.<version>)
+
+Open https://www.unidata.ucar.edu/software/idv/<release_dir> in a web browser.
+Test all the links to the docs.  Fix any broken links.
+
+********************************************************************************
+
+Tag the git repository:
+
+After the release of a version, you should make a tag in the git repository
+in case changes are needed later.  To tag the git repository,
+run:
+
+git tag v<version>
+git push origin v<version>
+
+See the git history for tag examples.
+
+********************************************************************************
+
+Update the current and stable links:
+
+cd /content/software/idv
+rm current
+ln -s <current IDV version> current
+
+cd release
+rm stable
+rm current
+ln -s ../<current IDV version> current
+ln -s ../<stable IDV version> stable    (or simply point stable to current)
+
+Go to the IDV homepage and make sure it is pointing to the updated directory.  Make
+sure all the links on the page work correctly.
+
+********************************************************************************
+
+Send out email to community:
+
+idvusers@unidata.ucar.edu
+idvdevelopers@unidata.ucar.edu
+support-announce@unidata.ucar.edu
+
+Dear IDV User Community,
+
+IDV XXXX is now available for download <https://www.unidata.ucar.edu/downloads/idv/XXXXX/>.
+
+[Info about the release]
+
+See the release notes <https://www.unidata.ucar.edu/software/idv/docs/userguide/ReleaseNotes.html>
+for a complete list of new features.
+
+Best Regards,
+
+The Unidata IDV Team
+
+********************************************************************************
+
+The IDV Testing Suite
+
+The code for IDV testing suite is contained within this git repo:
+
+https://github.com/Unidata/idv-test
+
+The IDV testing suite make use of Docker technology. See here for more
+information on running the test suite with Docker:
+
+https://hub.docker.com/r/unidata/idv-test/
+
+Currently, the testing suite runs on a nightly basis on our Azure resources.
+Please see here for the results of these tests:
+
+http://unidata-idvtest.cloudapp.net/compare.html
+
+********************************************************************************
+
+Building/configuring the installers
+
+build.xml:
+
+The entire build process is quite Baroque owing to the complexity of the IDV,
+and the long history of the project. Currently the nightly build runs from spock
+from Yuan's crontab:
+
+5 1 * * * /share/idv/release/newbuildIdv nightly > /share/idv/nightly.log 2>&1
+5 2 * * * mailx -s "IDV Build Status" chastang@unidata.ucar.edu yuanho@unidata.ucar.edu < /share/idv/nightly.log
+
+Naturally the IDV is built from what is in version control EXCEPT for the
+build.xml file in /share/idv/release/build.xml. This file must be manually
+maintained and copied over from release/build.xml in the git repository when
+there are changes. Make sure to tread lightly here and make any backups before
+overwriting anything. Note that /share/idv/release/build.xml contains passwords
+that the release/build.xml does not have. It is instructive to simply do a diff
+between these files. For the build make sure these two build.xmls stay in sync
+except for any passwords. Don't check passwords into version control! See the
+section about certificates below:
+
+Installers:
+
+The installers are built automatically by ant using install4j ant tasks which is
+located in /share/install4j.  We have a single, multi-platform license which
+means that only one copy can run at a time, but on any machine you want even VMs
+as long as it is on the Unidata network.
+
+Website for install4j is
+http://www.ej-technologies.com/products/install4j/overview.html.  The Unidata
+Admin staff has the license information.  The license server runs on abbott as
+of October 2011.
+
+The install4j support staff is usually pretty responsive so contact them if you
+have trouble: ej-technologies Support <bugs@ej-technologies.com>
+
+The configuration file is in git:
+/src/ucar/unidata/idv/release/installer/idv.install4j.  This file is used as a
+template for the installer and copied to /share/idv/installers during the build
+process.  At that point, the version number is filled in.
+
+To make configuration changes, run /share/install4j/bin/install4j and open the
+template.  After making changes, test the build and if it works as you expect,
+save the changes back to the template.
+
+JRE bundles:
+
+The JREs that are included in the installers need to be updated periodically as
+new versions of Java come out. This process has been made much easier for a
+variety of reasons. We can generally use the JRE provided by install4j. 
+
+http://resources.ej-technologies.com/install4j/help/doc/index.html#install4j.helptopics.concepts.jreBundles
+
+For Linux, we use Vagrant VMs coupled with install4j for the creation of the
+JRE.  The Vagrantfiles are located in release/vagrant. Note you will have to run
+those Vagrant VMs on the Unidata network to have access to the install4j license
+sever.
+
+The platforms currently supported by the IDV are
+
+- linux
+- linux64
+- windows
+- windows64
+- mac os x
+
+On Linux Vagrant VMs, it is a matter of:
+
+- downloading the JRE from oracle.com
+- logging into the Vagrant VM of the particular OS
+- unpacking the OS specific JRE to a known directory
+- running install4j to create a new JRE bundles.  Also, you must run the
+install4j bundle wizard on the specific OS (Vagrant machine)for a given JRE
+bundle.
+
+Now that you have done the work of obtaining the JREs, for all platforms, to
+create a JRE bundle in install4j, start it up and select the Project->Create a
+JRE Bundle menu (this menu item is not available on OS X for install4j version 4
+so don't tear your hair out looking for it) and step through the process. The
+important page is the Select a JRE:
+
+- select the top level of the unpacked JRE
+- Input the version of the JRE (e.g. 1.8.0_45)
+- For the custom id, use the java 3d version  (e.g., j3d1.5.2)
+
+The resulting JRE bundle will use this to create a name like:
+
+linux-i386-1.6.0_20.5.2.tar.gz
+
+The JRE bundles are automatically stored in /share/install4j/jres (if you are
+running install4j from /share/install4j/bin), except on Windows.  It will be
+stored in the jres directory of the Windows install4j installation and then has
+to be manually copied over to /share/install4j/jres.
+
+Once you have created the JRE bundles, you need to update the install4j template
+to point to the new versions.  There are two ways to do this.  The most
+fool-proof way is to run install4j and update the Media instances to point to
+the new bundles.  The other is just to edit the template.  If you do the latter,
+just make sure you change all references.
+
+SSEC uses install4j for McIDAS-V, so you can contact them for help
+with the program.  We also share the JRE bundles with them for
+platforms that we don't have.
+
+The Unidata admin staff has the information on licenses and passwords
+to get in to download new versions.
+
+Java 3D:
+
+Java 3D is being maintained by the open source community. The API is frozen, bug
+fixes only (and, yes, they really do fix bugs). The best place to obtain
+information on the status of Java 3D is the JogAmp Java 3D forum:
+http://forum.jogamp.org/java3d-f3728156.html
+
+Contrary to the past, the Java 3D files are contained in zip files in libsrc
+directory. The files are incorporated into the install4j build process so that
+they end in the correct place in the IDV distribution. These need to be
+periodically updated with a recent JOGL and Java 3D jars. But doing so requires
+careful and systematic testing of the IDV. If you find a bug, provide an
+isolated test case and report back to the forum.
+
+See here for more information:
+
+https://gouessej.wordpress.com/2012/08/01/java-3d-est-de-retour-java-3d-is-back/
+
+Even though this blog entry is old, it is periodically updated.
+
+********************************************************************************
+
+Certificate Signing
+
+Unfortunately, we live in a much more stringent security environment than in the
+past. This means the IDV distributions on OS X, Windows, and Java Webstart must
+have certificates otherwise the users will run into various problems including
+not being able to run the IDV. Obtaining these certificates can be a pain. You
+will have to work with the security group at UCAR-CISL whenever they expire.
+
+The certificates for Windows and OS X are kept in /share/idv/Certicates. Therein
+you will find .p12 files. Work with UCAR-CISL security to obtain these
+certificate files when they expire. See the General Settings, Code Signing Tab
+in install4j for more information of about the signing process. On OS X a
+"Developer ID" certificate (and no other kind of certificate) is mandatory.
+
+For Webstart, see the release/build.xml and search for "sign".
+
+For signing passwords, see /share/idv/release/build.xml. Don't store passwords
+in version control! 
+
+********************************************************************************
+
+Java 3D Hosting.
+
+As of September 2011, Oracle no longer hosts properly signed Java 3D jars necessary
+for Java Web Start.
+
+https://forums.oracle.com/forums/thread.jspa?messageID=9882107
+
+Unidata now host those jars here signed with our own certificate.
+
+https://www.unidata.ucar.edu/software/idv/java3d/java3d-latest.jnlp
+
+Please note that when the certificates expire it will be necessary to resign those
+jars.
+
+jarsigner -keystore file:///share/idv/.keystore -storepass XXXXX <jar file> idv
+
+For the password, see the IDV ant build.xml.
+
+Please see here for more information:
+
+https://www.unidata.ucar.edu/unidata_only/admin/idv_software_license_info.html

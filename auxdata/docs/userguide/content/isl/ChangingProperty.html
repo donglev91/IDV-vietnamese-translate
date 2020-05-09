@@ -1,0 +1,58 @@
+<html><head>
+  <title>Changing Bundle Properties</title>
+  <link rel="stylesheet" type="text/css" href="../idv.css" title="Style">
+</head>
+<body>
+
+[isl::tagdef displayproperties  {Changing bundle display properties} -attrs {display+ {the display with properties that need to be changed}
+property+ {name and new value of the existing property } }]
+The [isl::tag displayproperties] tag allows you to change the existing properties in a bundle file. For example,
+this could be used to change the probe location, chart name, etc.
+
+<p>
+In this example, we use the displayproperties tag to change two existing properties in the bundle RUC.xidv. First, the IDV
+needs to identify the display to search for existing properties, which is the ProbeControl. After we identify the display,
+the IDV uses the property name and new value to replace the existing property, and the two properties being changed are probe location
+ and chart name.
+<p>
+
+[isl::importxml probeTimeSeries.isl]
+
+<p>
+In the next example, we use the displayproperties tag to change two existing properties: the smoothing type and the smoothing factor,
+in the bundle RUC.xidv. First, the IDV needs to identify the display to search for existing properties, which is the ContourPlanViewControl.
+After we identify the display, the IDV uses the property name and new value to replace the existing property, and the new smoothing type
+and factor being applied to contours.
+<p>
+
+[isl::importxml contourSmoothing.isl]
+
+<p>
+In the third example, we use the displayproperties tag to change two end points of a cross section in the bundle RUC.xidv.
+First, the IDV needs to identify the display to search for existing properties, which is the ContourCrossSectionControl.
+After we identify the display, the IDV uses the property name and new value to replace the existing property, and the new
+end points being applied to the cross section.
+<p>
+
+[isl::importxml contourCrossSection.isl]
+
+<p>
+In the fourth example, we use the displayproperties tag to change the azimuth value of radar RHI display in the bundle radar.xidv.
+First, the IDV needs to identify the display, and it is the ColorRhiControl. After we identify the display, the IDV uses
+the property name "EndPoint" and new value to replace the existing property, and the new azimuth value being applied to
+the RHI cross section.
+<p>
+
+[isl::importxml radarRHI.isl]
+
+<p>
+In the fifth example, we use the displayproperties tag to change the time zone of the display list.
+The ISL only need to provides one of the control in the display, and it is the ContourPlanViewControl in this example.
+After we identify the display, the IDV uses the property name "DisplayListTimeZone" to identify the function to
+reset the time zone value and update the display list. The time zone in the test bundle is GMT, and the ISL script changes
+the time zone to MST and EST before capturing the image.
+<p>
+
+[isl::importxml changingTimeZone.isl]
+
+</body>

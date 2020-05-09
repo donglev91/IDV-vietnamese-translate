@@ -1,0 +1,143 @@
+<html><head>
+  <title>Data Source Properties</title>
+  <link rel="stylesheet" type="text/css" href="../idv.css" title="Style">
+</head>                  
+<body>
+
+<%nochildlist%>
+
+To set the defaults for a data source bring up the 
+Properties dialog by right clicking  (or double clicking)
+on the data source name in the data sources panel
+of the Field Selector window and select [ug::menu Properties]:
+
+[ht::cimg images/DataSourceMenu.gif]
+
+The Properties Dialog is different for different types of data sources. Here is 
+the dialog window for a gridded data source:
+
+[ht::cimg images/DataSourceProperties.gif]
+
+Any displays that are showing data from a data source can be automatically
+updated by selecting the [ug::button Reload Displays] button. When this is selected
+all data will be reloaded and the displays will be updated when the user presses
+[ug::button Apply] or [ug::button OK].
+
+<subhead intoc="false" id="basicproperties">Basic Properties</subhead>
+You can change the displayed name with the [ug::button Name] field.
+
+<p>
+Some data sources can automatically update themselves by selecting
+the [ug::button Active] button. For example, if you had a set of most recent 
+satellite images you can turn on Polling and have the data update to the latest
+images every N minutes.
+<p>
+For point data you can define  <i>Time Binning</i> settings (not shown) by selecting
+a Bin Size (e.g., 5 minutes, 1 hour) and a Round To value (e.g., On the hour, 15 minutes after the
+hour). This will map all the observation times into the nearest bin.  The smallest time is rounded
+with the Round To value (e.g., if Round To was &quot;10 after&quot; and the smallest time was
+10:23 then this time would be rounded to 10:20). This is the base time. Each actual observation time
+is mapped into a set of bins of Bin Size starting at the base time.
+
+
+<subhead intoc="false" id="times">Times</subhead>
+The Times tab allows you to select the times to use. The drop down menu has two menu items: [ug::button Use Default]
+and [ug::button Use Selected]. Click the drop down menu, choose the [ug::button Use Selected]
+menu item and select individual times. You can also right mouse click in the list
+to show a popup menu that allows you to select different strides (e.g., every 3rd time).
+
+[ht::cimg images/DataSourceTimes.gif]
+
+
+A version of this time subsetting window is used in the Field
+Selector. Here, you have additional menu items: [ug::button Match Time Driver] and [ug::button Set As TIme Driver]
+to allow you to use the time driver times or to set the selected times as the time driver times.
+
+[ht::cimg images/DataSourceTimeSubset.gif]
+
+
+
+
+<subhead intoc="false" id="spatialsubset">Spatial Subsetting</subhead>
+For grids and other data source types  the data can be subset and decimated
+with the [ug::button {Spatial Subset}] tab.
+The [ug::menu {X Stride}], [ug::menu {Y Stride}] and [ug::menu {Z Stride}] menus
+allow you to decimate a grid, selecting every Nth point.
+The [ug::button Bounding Box] allows you to define a spatial area to load.
+The default spatial domain of the data is shown by the blue outline box.
+To select an area just drag on the map. Once a subset is selected it can be
+resized (grab on the little black selection points) moved  (grab somewhere near the 
+box) and delete (press the Delete key).
+Specific lat/lon values can be entered in the fields on the left.  The [ug::button Match Display Area]
+checkbox allows you to define a spatial subset option. By checking this option, the map area will
+be disabled and this will be the default option for all the variables of this dataset.
+
+[ht::cimg images/DataSourceSpatialSubset.gif]
+
+A version of this spatial subsetting window is used in the Field
+Selector. Here, you have drop down menu of items: [ug::button Use Default Region], [ug::button Select A Region] and
+[ug::button Match Display Region]. These options allow you to use the default region, or to select a region, or to match the region
+of the active view window's display area. The decimation and spatial subset are shown in different tabs:
+
+[ht::cimg images/DataSourceSpatialSubsetField.gif]
+
+
+The spatial subsetting window for the Satellite imagery also provides the preview of the dataset:
+
+[ht::cimg images/DataSourceSateSpatialSubsetField.gif]
+
+<p>
+    The advanced tab for the the satellite imagery allows you to override the default properties the
+    IDV uses to specify other aspects of the image data. The default values in the [ug::button Advanced]
+    tab reflect what is showing in the [ug::button Region] tab. By default, all the text fields in this
+    tab are disabled. To enable these text fields, you can select [ug::button Select A Region] in
+    the [ug::button Region] tab, all the text fields except the [ug::button Magnification] will be editable.
+    The information in the [ug::button Region] tab will be passed to the [ug::button Advanced] tab.
+    Any changes in the [ug::button Advanced] tab will also be passed back to the [ug::button Region] tab.
+
+<p>
+    There are two different approaches to enable the [ug::button Magnification] widget. First, you can
+    un-check the [ug::button Enable Adaptive Resolution] checkbox in the user preferences to enable
+    the [ug::button Magnification] text field. Second, you can un-check the [ug::button Enable Adaptive Resolution]
+    checkbox in the view window [ug::button Projections] drop down menu. In both cases, you need to reload the
+    data to get the widget enable or disable if the data already loaded.
+
+    [ht::cimg images/DataSourceSateAdvanced.gif]
+<p>
+
+    You can specify the placement point of the image (e.g., Center, Upper Left)
+    and its  location. Location can either be specified as an Line/Element
+    Area coordinate or as Latitude/Longitude.  Use the cycle buttons to select
+    the type of location to use.
+
+<p>
+    The map button, <img src="choosers/images/MapIcon16.png"> will list the various center and corner locations
+    of the different available map views. This allows you to choose a lat/lon position.
+
+<p>
+    Image size and magnification can also be set.  Click on the slider
+    icon to change the values.
+
+<p>
+    The linked button (<img src="choosers/images/Linked.gif">), when selected, will automatically change the image size
+    as the magnification is changed.
+
+<p>
+    The Full Resolution button <img src="choosers/images/arrow_out.png"> allows you to set the magnifcation,
+    image size and position to be the full image resolution.
+
+<subhead intoc="false" id="details">Details</subhead>
+The Details tab shows further information about the data source, e.g.:
+any documentation associated with the data, what files or urls are used, etc.
+
+
+<subhead intoc="false" id="metadata">Metadata</subhead>
+For grid data sources the Metadata tab shows the NetCDF metadata.
+
+
+
+
+
+</body>
+
+

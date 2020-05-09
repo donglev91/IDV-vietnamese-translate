@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Lightning  Display</title>
+</head>
+
+<body>
+
+<div class="overview">
+The IDV has lightning data display capability.
+</div>
+
+<ol class="step">
+    <li>[ht::clearDisplaysAndData]</li>
+    <li>Load some lighting data</li>
+    <ul>
+          <li>[ht::openDataSourceChooser]</li>
+	  <li>In the [ht::dialog Data Chooser] tree click on the [ht::command Files] node.</li>
+          <li> Go to the point data directory: [ht::filename <%workshop.datadir%>/lightning/].</li>
+	  <li> Select both [ht::filename 201118719.ingest] and [ht::filename 201118720.ingest]</li>
+	  <li> Under the [ht::command Data Source Type] pulldown menu, select &quot;Netcdf Point Data files&quot;</li>
+          <li> Press [ht::button Add Source]</li>
+    </ul>
+    <li>Create the display</li>
+    <ul>
+      <li>In the [ht::command Data Sources] panel right click the lightning data source.</li>      
+      <li>Under [ht::command Properties] tab in the Time Binning section, change Bin Size to 5 minutes</li>
+      <li>Click on the [ht::tab Spatial Subset] tab. Select a region encompassing South Carolinas state and press [ht::button OK].</li>
+      <li>In the [ht::command Fields] panel select [ht::param Point Data].</li>
+      <li>In the [ht::command Displays]  select [ht::display Point Data Plot] and press [ht::button Create Display]</li>
+      <li>Select [ht::command Layout Model] tab</li>
+      <li>Click on the menu and select Lightning > Bolts</li>
+      <li>In the same menu click Edit</li>
+      <li>Double click on the lightning layout model</li>
+      <li>Ensure that the parameter being displayed is "sgnl", and Press [ht::button OK].</li>
+      <li>Press [ht::button Create Display]</li>
+    </ul>
+    <li>Improving the lightning display in the [ht::command Displays] panel</li>
+    <ul>
+      <li>Disable [ht::command Declutter].</li>
+      <li>In the [ht::command Times] panel, select [ht::command {Show Multiple}]</li>
+      <li>Select the <img src="images/cal.gif"> button to show the [ht::command Time Settings] dialog</li>
+      <li>For Start Time choose [ht::button Relative to End Time], and click on <img src="images/cal.gif"> button to the right of that dropdown</li>
+      <li>In the [ht::command Set Start Offset]  Dialog select minus (-) 20 minutes.</li>
+      <li>For End Time choose [ht::button From Animation Time], and Press [ht::button OK]</li>
+    </ul>
+    <li>Turn on animation</li>
+</ol>
+
+</body>
+</html>
+

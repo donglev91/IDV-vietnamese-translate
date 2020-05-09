@@ -1,0 +1,123 @@
+<html><head>
+<title>Release Notes</title>
+<link rel="stylesheet" type="text/css" href="idv.css" title="Style">
+</head>
+<body>
+
+<div class="pagesubtitle">
+Integrated Data Viewer<br>
+Version <%idv.version%>
+</div>
+
+<hr>
+
+The items below reflect changes since the 5.4 release.
+
+<faq qlabel=" " alabel=" ">
+
+<faqitem cat="System Changes"></faqitem>
+
+
+<faqitem q="Latest netCDF-Java Version" id="nj465">
+
+  <p>
+    The version of the netCDF-Java library currently distributed with the IDV is
+    the 4.6.11. This is a bug fix release.  See
+    the <a href="https://www.unidata.ucar.edu/blogs/news/entry/netcdf-java-library-and-tds7">
+      netCDF-Java Library</a> for a more details information.
+  </p>
+</faqitem>
+
+
+<faqitem cat="Display Changes"></faqitem>
+
+
+<faqitem q="Isentropic Analysis" id="isentropicana">
+  <p>
+    For synoptic scale motions, isentropic surfaces are material surfaces. Atmospheric variables tend
+    to be better correlated along an isentropic surface upstream/downstream.
+    In a 3D visualization space, the new 3D isentropic analysis makes it intuitive to diagnose horizontal
+    and vertical motion of the atmosphere, and helps us better understand the dynamic
+    and stability of weather phenomenons.
+  </p>
+</faqitem>
+
+<faqitem q="Scatter Analysis" id="scatterplot">
+  <p>
+    The IDV constructs scatterplots to illustrate different types of direction and strength of relationships of
+    different weather parameters, where the values of one variable are along X axis and the values of the second variable
+    are along the Y axis. The new scatter analysis is used to create a scatter plot to study the relationships
+    between two 2D parameters. A Scatter analysis also provides statistical information about the data as a whole,
+    as well as the subset regions of the data.
+
+  </p>
+</faqitem>
+
+<faqitem q="GOES-16 GLM Display" id="goesGLM">
+  <p>
+    The GLM L2 product consists of geo-located and time-stamped events, groups, and flashes, with
+    associated calibrated optical amplitudes (in units of Joules). The IDV has three new data source types:
+    GLM EVENT Data files, GLM GROUP Data files, and GLM FLASH Data file to view these three GLM products.
+  </p>
+</faqitem>
+
+<faqitem q="Grid 3D Surface Smoothing" id="g3dsmooth">
+  <p>
+    IDV extands the all 2D horizontal smoothing types to 3D gridded parameters. The smoothing is now available
+    on 3D displays like isosurfaces of gridded dataset and level2 radar dataset.
+  </p>
+</faqitem>
+
+<faqitem q="Authentication logic upgraded" id="authlogic">
+  <p>
+    IDV advances its authentication logic to handle the password changed and/or input wrong password.
+  </p>
+</faqitem>
+
+<faqitem cat="Jython Changes"></faqitem>
+
+
+
+<faqitem q="Basic Grid Math" id="mapesbasicmath">
+  <p>
+    A collection of Utilites from Mapes IDV collection performs a series of basic grid divide, multiply,
+    modulo, and vertical derivative.
+  </p>
+</faqitem>
+
+<faqitem q="3D Scalar Field Horizontal Smoothing" id="mapessmth">
+  <p>
+    A collection of Utilites from Mapes IDV collection applies a series of horizontal smoothing on 3D field.
+  </p>
+</faqitem>
+
+<faqitem q="Time Mean and Anomaly" id="mapestimema">
+  <p>
+    A collection of Utilites from Mapes IDV collection calculates a series of daily, monthly, yearly mean
+    and anomaly.
+  </p>
+</faqitem>
+
+  <faqitem q="Publishing to the RAMADDA" id="islpub">
+    <p>
+      The new ISL publish tag will publish a file to RAMADDA server.
+    </p>
+  </faqitem>
+<faqitem cat="Bug Fixes/Known Problems"></faqitem>
+
+<faqitem q="Bug Fixes" id="bugfix">
+  We fixed a long time bug associated with the CAPE/CIN calculation in this release. Another
+  bug fixed is to handle the redirect of the http urls.
+</faqitem>
+
+<faqitem q="Known Problems" id="problems">
+  <p>
+    For a list of outstanding known problems, see the
+    <a href="Bugs.html">Known Problems</a> page.
+  </p>
+</faqitem>
+
+</faq>
+
+</body>
+</html>
